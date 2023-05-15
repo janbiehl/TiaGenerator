@@ -1,0 +1,15 @@
+name: Sample Generator
+description: Dies ist der erste Test für den Generator
+author: J.Biehl
+actions:
+  - !CopyProjectAction
+    type: copy-project
+    source_project_file: C:/HelloWorld/Test.ap17
+    target_project_directory: C:/HelloWorld/Generated/Test.ap17
+  - !OpenProjectAction
+    type: open-project
+    project_file_path: C:/HelloWorld/Generated/Test.ap17
+  - !CreatePlcAction
+    type: create-plc
+    plc_name: PLC_1
+    plc_order_number: S7-1500
