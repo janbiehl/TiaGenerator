@@ -41,10 +41,16 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Actions\CopyProjectAction.cs" />
-        <Compile Include="Actions\CreatePlcAction.cs" />
         <Compile Include="Actions\CreateTiaInstanceAction.cs" />
-        <Compile Include="Actions\OpenProjectAction.cs" />
+        <Compile Include="Actions\ExportBlockAction.cs" />
+        <Compile Include="Actions\PlcActions\CompilePlcAction.cs" />
+        <Compile Include="Actions\PlcActions\CreatePlcAction.cs" />
+        <Compile Include="Actions\PlcActions\GetFirstPlcAction.cs" />
+        <Compile Include="Actions\PlcActions\GetPlcAction.cs" />
+        <Compile Include="Actions\ProjectActions\CloseProjectAction.cs" />
+        <Compile Include="Actions\ProjectActions\CopyProjectAction.cs" />
+        <Compile Include="Actions\ProjectActions\OpenProjectAction.cs" />
+        <Compile Include="Actions\ProjectActions\SaveProjectAction.cs" />
         <Compile Include="Models\DataStore.cs" />
         <Compile Include="Options.cs" />
         <Compile Include="Program.cs" />
@@ -62,7 +68,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
         <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
         <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-32" />
-        <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-24" />
+        <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-26" />
         <PackageReference Include="YamlDotNet" Version="13.1.0" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
