@@ -37,6 +37,11 @@ namespace TiaGenerator.Actions
 				if (tiaPortal is null)
 					return (ActionResult.Failure, "TIA Portal instance not found");
 
+				var existingProject = dataStore.GetValue<Project>(DataStore.TiaProjectKey);
+
+				if (existingProject != null)
+					return (ActionResult.Fatal, "There is already an open project");
+
 				var project = tiaPortal.OpenProject(ProjectFilePath!, true, credentials =>
 				{
 					credentials.Type = UmacUserType.Project;
@@ -52,7 +57,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
-				return (ActionResult.Fatal, e.Message);
+				throw new ApplicationException("Could not open project", e);
 			}
 		}
 	}

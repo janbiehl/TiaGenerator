@@ -3,7 +3,6 @@ using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
-using TiaGenerator.Services;
 
 namespace TiaGenerator.Actions
 {
@@ -34,7 +33,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
-				return (ActionResult.Failure, e.Message);
+				throw new ApplicationException("Could not create TIA Portal instance", e);
 			}
 		}
 	}

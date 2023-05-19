@@ -17,10 +17,10 @@ namespace TiaGenerator.Actions
 		public override (ActionResult result, string message) Execute(IDataStore dataStore)
 		{
 			if (string.IsNullOrWhiteSpace(SourceProjectFile))
-				return (ActionResult.Failure, "Source project file is not set");
+				return (ActionResult.Fatal, "Source project file is not set");
 
 			if (string.IsNullOrWhiteSpace(TargetProjectDirectory))
-				return (ActionResult.Failure, "Target project directory is not set");
+				return (ActionResult.Fatal, "Target project directory is not set");
 
 			try
 			{
@@ -32,7 +32,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
-				return (ActionResult.Fatal, e.Message);
+				throw new ApplicationException("Could not copy project", e);
 			}
 		}
 	}
