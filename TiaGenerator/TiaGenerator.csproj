@@ -12,7 +12,7 @@
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <LangVersion>8</LangVersion>
+        <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -43,14 +43,25 @@
     <ItemGroup>
         <Compile Include="Actions\CopyProjectAction.cs" />
         <Compile Include="Actions\CreatePlcAction.cs" />
-        <Compile Include="Actions\GeneratorAction.cs" />
+        <Compile Include="Actions\CreateTiaInstanceAction.cs" />
         <Compile Include="Actions\OpenProjectAction.cs" />
+        <Compile Include="Options.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Services\DataProviderService.cs" />
+        <Compile Include="Services\TiaGeneratorService.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="Dependencies\Siemens.Engineering.dll" />
-      <Content Include="Sample\sample.yaml" />
+        <Content Include="Sample\sample.yaml">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-27" />
+        <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-24" />
+        <PackageReference Include="YamlDotNet" Version="13.1.0" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
