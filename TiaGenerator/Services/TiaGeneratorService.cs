@@ -1,35 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TiaGenerator.Core.Interfaces;
+using TiaGenerator.Models;
 
 namespace TiaGenerator.Services
 {
-	public class DataStore : IDataStore
-	{
-		public const string TiaPortalKey = "TiaPortal";
-		public const string TiaProjectKey = "TiaProject";
-
-		private readonly Dictionary<string, object> _data = new();
-
-		public void SetValue<T>(string name, T value) where T : new()
-		{
-			_data[name] = value ?? throw new ArgumentNullException(nameof(value));
-		}
-
-		/// <inheritdoc />
-		public T? GetValue<T>(string name) where T : new()
-		{
-			if (_data.TryGetValue(name, out var value))
-				return (T?) value;
-
-			return default;
-		}
-	}
-
 	public class TiaGeneratorService : BackgroundService
 	{
 		private readonly ILogger<TiaGeneratorService> _logger;
@@ -49,6 +25,15 @@ namespace TiaGenerator.Services
 		/// <inheritdoc />
 		protected override Task ExecuteAsync(CancellationToken stoppingToken)
 		{
+			// TODO: Activate the following
+			// Api.Global.Openness().Initialize(tiaMajorVersion: 17);
+			//
+			// if (!Api.Global.Openness().IsUserInGroup())
+			// {
+			// 	Console.WriteLine("The user is not in the group 'TIA_Portal_Developer'.");
+			// 	return Task.CompletedTask;
+			// }
+
 			var data = _dataProvider.LoadData();
 
 			if (data is null)
@@ -59,7 +44,7 @@ namespace TiaGenerator.Services
 
 			_logger.LogDebug("Data loaded {Data}", data);
 
-			var dataStore = new DataStore();
+			using var dataStore = new DataStore();
 
 			if (data.Actions != null)
 			{

@@ -45,6 +45,7 @@
         <Compile Include="Actions\CreatePlcAction.cs" />
         <Compile Include="Actions\CreateTiaInstanceAction.cs" />
         <Compile Include="Actions\OpenProjectAction.cs" />
+        <Compile Include="Models\DataStore.cs" />
         <Compile Include="Options.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,7 +60,8 @@
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-        <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-27" />
+        <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
+        <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-32" />
         <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-24" />
         <PackageReference Include="YamlDotNet" Version="13.1.0" />
     </ItemGroup>

@@ -1,7 +1,9 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Siemens.Collaboration.Net;
 using TiaGenerator.Actions;
 using TiaGenerator.Core.Services;
 using TiaGenerator.Services;
@@ -74,7 +76,6 @@ namespace TiaGenerator
 						.Build()
 				});
 				services.AddSingleton<DataProviderService>();
-				services.AddSingleton<TiaGeneratorService>();
 				services.AddHostedService<TiaGeneratorService>();
 			});
 
