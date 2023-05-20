@@ -1,0 +1,60 @@
+<#@ template language="C#" #>
+<SW.Blocks.CompileUnit ID="<#= GetId() #>" CompositionName="CompileUnits">
+    <AttributeList>
+        <NetworkSource>
+            <FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+                <Parts>
+                    <Call UId="21">
+                        <CallInfo Name="<#= BlockName #>" BlockType="FB">
+                            <Instance Scope="GlobalVariable" UId="22">
+                                <Component Name="<#= BlockInstanceName #>" />
+                            </Instance>
+                        </CallInfo>
+                    </Call>
+                </Parts>
+                <Wires>
+                    <Wire UId="23">
+                        <Powerrail />
+                        <NameCon UId="21" Name="en" />
+                    </Wire>
+                </Wires>
+            </FlgNet>
+        </NetworkSource>
+        <ProgrammingLanguage>LAD</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+        <MultilingualText ID="<#= GetId() #>" CompositionName="Comment">
+            <ObjectList>
+                <MultilingualTextItem ID="<#= GetId() #>" CompositionName="Items">
+                    <AttributeList>
+                        <Culture>de-DE</Culture>
+                        <Text />
+                    </AttributeList>
+                </MultilingualTextItem>
+            </ObjectList>
+        </MultilingualText>
+        <MultilingualText ID="<#= GetId() #>" CompositionName="Title">
+            <ObjectList>
+                <MultilingualTextItem ID="<#= GetId() #>" CompositionName="Items">
+                    <AttributeList>
+                        <Culture>de-DE</Culture>
+                        <Text><#= BlockName #></Text>
+                    </AttributeList>
+                </MultilingualTextItem>
+            </ObjectList>
+        </MultilingualText>
+    </ObjectList>
+</SW.Blocks.CompileUnit>
+
+<#+
+    public string BlockName { get; set; } = null!;
+    public string BlockInstanceName { get; set; } = null!;
+    private static int _id = 10;
+
+    private static int GetId()
+    {
+        _id++;
+
+        return _id;
+    }
+#>

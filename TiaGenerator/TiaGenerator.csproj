@@ -57,10 +57,38 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Services\DataProviderService.cs" />
         <Compile Include="Services\TiaGeneratorService.cs" />
+        <Compile Include="Templates\TemplateBlockFC.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>TemplateBlockFC.tt</DependentUpon>
+        </Compile>
+        <Compile Include="Templates\TemplateFbBlockCall.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>TemplateFbBlockCall.tt</DependentUpon>
+        </Compile>
+        <Compile Include="Templates\TemplateFcBlockCall.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>TemplateFcBlockCall.tt</DependentUpon>
+        </Compile>
+        <Compile Include="Utils\FileProcessorUtils.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="Sample\sample.yaml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Templates\TemplateBlockFC.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>TemplateBlockFC.cs</LastGenOutput>
+        </Content>
+        <Content Include="Templates\TemplateFbBlockCall.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>TemplateFbBlockCall.cs</LastGenOutput>
+        </Content>
+        <Content Include="Templates\TemplateFcBlockCall.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>TemplateFcBlockCall.cs</LastGenOutput>
         </Content>
     </ItemGroup>
     <ItemGroup>
