@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
@@ -13,7 +14,7 @@ namespace TiaGenerator.Actions
 		public string? FilePath { get; set; }
 
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore datastore)
+		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
 		{
 			if (string.IsNullOrWhiteSpace(BlockName))
 				throw new InvalidOperationException("Block name is not set properly");
@@ -31,7 +32,8 @@ namespace TiaGenerator.Actions
 
 				block.ExportToFile(FilePath!);
 
-				return (ActionResult.Success, $"Block '{block.Name}' exported to '{FilePath}'");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Success,
+					$"Block '{block.Name}' exported to '{FilePath}'"));
 			}
 			catch (Exception e)
 			{

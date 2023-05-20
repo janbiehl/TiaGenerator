@@ -1,11 +1,11 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
-using TiaGenerator.Services;
 using TiaGenerator.Tia.Extensions;
 
 namespace TiaGenerator.Actions
@@ -22,25 +22,28 @@ namespace TiaGenerator.Actions
 		public string? Password { get; set; }
 
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore dataStore)
+		public override Task<GeneratorActionResult> Execute(IDataStore dataStore)
 		{
 			try
 			{
 				if (string.IsNullOrWhiteSpace(ProjectFilePath))
-					return (ActionResult.Failure, "Project file is not set");
+					return Task.FromResult(new GeneratorActionResult(ActionResult.Failure, "Project file is not set"));
 
 				if (!File.Exists(ProjectFilePath))
-					return (ActionResult.Failure, "Project file does not exist");
+					return Task.FromResult(new GeneratorActionResult(ActionResult.Failure,
+						"Project file does not exist"));
 
 				var tiaPortal = dataStore.GetValue<TiaPortal>(DataStore.TiaPortalKey);
 
 				if (tiaPortal is null)
-					return (ActionResult.Failure, "TIA Portal instance not found");
+					return Task.FromResult(new GeneratorActionResult(ActionResult.Failure,
+						"TIA Portal instance not found"));
 
 				var existingProject = dataStore.GetValue<Project>(DataStore.TiaProjectKey);
 
 				if (existingProject != null)
-					return (ActionResult.Fatal, "There is already an open project");
+					return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal,
+						"There is already an open project"));
 
 				var project = tiaPortal.OpenProject(ProjectFilePath!, true, credentials =>
 				{
@@ -50,10 +53,11 @@ namespace TiaGenerator.Actions
 				});
 
 				if (project is null)
-					return (ActionResult.Failure, "Project could not be opened");
+					return Task.FromResult(new GeneratorActionResult(ActionResult.Failure,
+						"Project could not be opened"));
 
 				dataStore.SetValue(DataStore.TiaProjectKey, project);
-				return (ActionResult.Success, "Project opened");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project opened"));
 			}
 			catch (Exception e)
 			{

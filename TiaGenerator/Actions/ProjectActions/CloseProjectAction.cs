@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
@@ -11,7 +12,7 @@ namespace TiaGenerator.Actions
 		public bool SaveProject { get; set; }
 
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore datastore)
+		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
 		{
 			try
 			{
@@ -23,7 +24,7 @@ namespace TiaGenerator.Actions
 
 				tiaProject.Close();
 
-				return (ActionResult.Success, "Project closed");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project closed"));
 			}
 			catch (Exception e)
 			{

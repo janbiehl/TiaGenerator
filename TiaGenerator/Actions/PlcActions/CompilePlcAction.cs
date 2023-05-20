@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
@@ -10,7 +11,7 @@ namespace TiaGenerator.Actions
 	public class CompilePlcAction : GeneratorAction
 	{
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore datastore)
+		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
 		{
 			var plcDevice = datastore.GetValue<PlcDevice>(DataStore.TiaPlcDeviceKey)
 			                ?? throw new InvalidOperationException("There is no plc device to compile.");
@@ -18,10 +19,10 @@ namespace TiaGenerator.Actions
 			var result = plcDevice.PlcSoftware.Compile();
 
 			if (result is null)
-				return (ActionResult.Fatal, "Could not compile plc");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "Could not compile plc"));
 
-			return (ActionResult.Success,
-				$"PLC compiled: Warnings: {result.WarningCount}, Errors: {result.ErrorCount}");
+			return Task.FromResult(new GeneratorActionResult(ActionResult.Success,
+				$"PLC compiled: Warnings: {result.WarningCount}, Errors: {result.ErrorCount}"));
 		}
 	}
 }

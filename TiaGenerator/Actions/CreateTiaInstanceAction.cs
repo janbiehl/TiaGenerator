@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
@@ -12,7 +13,7 @@ namespace TiaGenerator.Actions
 		public bool WithInterface { get; set; }
 
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore datastore)
+		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
 		{
 			try
 			{
@@ -29,7 +30,7 @@ namespace TiaGenerator.Actions
 
 				datastore.SetValue(DataStore.TiaPortalKey, tiaPortal);
 
-				return (ActionResult.Success, "TIA Portal instance created");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "TIA Portal instance created"));
 			}
 			catch (Exception e)
 			{

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
@@ -9,7 +10,7 @@ namespace TiaGenerator.Actions
 	public class SaveProjectAction : GeneratorAction
 	{
 		/// <inheritdoc />
-		public override (ActionResult result, string message) Execute(IDataStore datastore)
+		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
 		{
 			try
 			{
@@ -17,7 +18,7 @@ namespace TiaGenerator.Actions
 				              throw new NullReferenceException("There is no project to save.");
 
 				project.Save();
-				return new(ActionResult.Success, "Project saved.");
+				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project saved."));
 			}
 			catch (Exception e)
 			{

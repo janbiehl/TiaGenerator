@@ -23,7 +23,7 @@ namespace TiaGenerator.Services
 		}
 
 		/// <inheritdoc />
-		protected override Task ExecuteAsync(CancellationToken stoppingToken)
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
 			// TODO: Activate the following
 			// Api.Global.Openness().Initialize(tiaMajorVersion: 17);
@@ -39,34 +39,33 @@ namespace TiaGenerator.Services
 			if (data is null)
 			{
 				_logger.LogError("No data loaded.");
-				return Task.CompletedTask;
 			}
 
 			_logger.LogDebug("Data loaded {Data}", data);
 
 			using var dataStore = new DataStore();
 
-			if (data.Actions != null)
+			if (data?.Actions != null)
 			{
 				foreach (var action in data.Actions)
 				{
 					try
 					{
-						var result = action.Execute(dataStore);
+						var result = await action.Execute(dataStore);
 
-						switch (result.result)
+						switch (result.Result)
 						{
 							case ActionResult.Failure:
-								_logger.LogError(result.message);
+								_logger.LogError(result.Message);
 								break;
 							case ActionResult.Fatal:
-								_logger.LogCritical(result.message);
+								_logger.LogCritical(result.Message);
 								break;
 							case ActionResult.Success:
-								_logger.LogInformation(result.message);
+								_logger.LogInformation(result.Message);
 								break;
 							default:
-								throw new ArgumentOutOfRangeException(nameof(result.result), "The result is unknown");
+								throw new ArgumentOutOfRangeException(nameof(result.Result), "The result is unknown");
 						}
 					}
 					catch (ApplicationException e)
@@ -78,7 +77,6 @@ namespace TiaGenerator.Services
 			}
 
 			_applicationLifetime.StopApplication();
-			return Task.CompletedTask;
 		}
 	}
 }
