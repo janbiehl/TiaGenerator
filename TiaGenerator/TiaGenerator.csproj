@@ -43,6 +43,7 @@
     <ItemGroup>
         <Compile Include="Actions\CreateTiaInstanceAction.cs" />
         <Compile Include="Actions\ExportBlockAction.cs" />
+        <Compile Include="Actions\ImportAndProcessBlock.cs" />
         <Compile Include="Actions\PlcActions\CompilePlcAction.cs" />
         <Compile Include="Actions\PlcActions\CreatePlcAction.cs" />
         <Compile Include="Actions\PlcActions\GetFirstPlcAction.cs" />
