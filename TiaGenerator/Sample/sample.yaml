@@ -9,7 +9,18 @@ actions:
   - !OpenProjectAction
     type: open-project
     project_file_path: C:/HelloWorld/Generated/Test.ap17
-  - !CreatePlcAction
-    type: create-plc
-    plc_name: PLC_1
-    plc_order_number: S7-1500
+    username: UCS
+    password: admin@UCS1
+  - !ExportBlockAction
+    type: export-block
+    block_name: TestBlock
+    file_path: C:/HelloWorld/Generated/Test.ap17
+  - !ImportAndProcessBlock
+    type: import-and-process-block
+    block_source_file: C:/HelloWorld/Test.ap17
+    block_destination_file: C:/HelloWorld/Generated/Test.ap17
+    block_group: Test/Hello/World
+    templates:
+      Hello: World
+      Test: Testi
+      (?<=<Name>)[^<]+(?=</Name>): Dummy

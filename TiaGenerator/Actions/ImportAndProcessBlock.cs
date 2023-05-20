@@ -27,7 +27,7 @@ namespace TiaGenerator.Actions
 		/// </summary>
 		public string? BlockGroup { get; set; }
 
-		public List<KeyValuePair<string, string>>? Templates { get; set; }
+		public Dictionary<string, string>? Templates { get; set; }
 
 		/// <inheritdoc />
 		public override async Task<ActionResult> Execute(IDataStore datastore)
@@ -50,26 +50,14 @@ namespace TiaGenerator.Actions
 			if (string.IsNullOrWhiteSpace(BlockGroup))
 				return new ActionResult(ActionResultType.Failure, "No block group specified.");
 
+			if (Templates == null)
+				return new ActionResult(ActionResultType.Failure, "No templates specified.");
+
 			try
 			{
-				await FileProcessorUtils.ReplaceInFile(BlockSourceFile, Templates);
+				await FileProcessorUtils.ReplaceInFile(BlockSourceFile!, Templates!);
 
-				using var sourceReader = new StreamReader(BlockSourceFile!, Encoding.UTF8);
-				using var destinationWriter = new StreamWriter(BlockDestinationFile!, false, Encoding.UTF8);
-
-				while (await sourceReader.ReadLineAsync() is { } fileLine)
-				{
-					var tmpLine = fileLine;
-
-					foreach (var template in Templates!)
-					{
-						tmpLine = Regex.Replace(tmpLine, template.Key, template.Value);
-					}
-
-					await destinationWriter.WriteLineAsync(tmpLine);
-				}
-
-				var plcDevice = datastore.GetValue<PlcDevice>("PlcDevice") ??
+				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device in the data store.");
 
 				var blockGroup = plcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup.Split("/"));

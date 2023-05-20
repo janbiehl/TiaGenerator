@@ -48,9 +48,9 @@ namespace TiaGenerator.Models
 		/// <summary>
 		/// Get the plc block group, when there is one
 		/// </summary>
-		public PlcBlockUserGroupComposition? PlcBlockGroup
+		public PlcBlockUserGroup? PlcBlockGroup
 		{
-			get => GetValue<PlcBlockUserGroupComposition>(nameof(PlcBlockGroup));
+			get => GetValue<PlcBlockUserGroup>(nameof(PlcBlockGroup));
 			set => SetValue(nameof(PlcBlockGroup), value);
 		}
 

@@ -45,7 +45,7 @@ namespace TiaGenerator.Utils
 		/// <param name="values">The key defines the text to search, the value defines the text that will be inserted</param>
 		/// <exception cref="FileNotFoundException">The file does not exist</exception>
 		/// <exception cref="ArgumentException">Invalid input data</exception>
-		public static async Task ReplaceInFile(string filePath, List<KeyValuePair<string, string>> values)
+		public static async Task ReplaceInFile(string filePath, Dictionary<string, string> values)
 		{
 			if (!File.Exists(filePath))
 				throw new FileNotFoundException("File not found", filePath);
@@ -66,7 +66,6 @@ namespace TiaGenerator.Utils
 					foreach (var valuePair in values)
 					{
 						processedLine = Regex.Replace(processedLine, valuePair.Key, valuePair.Value);
-						//processedLine = processedLine.Replace(valuePair.Key, valuePair.Value);
 					}
 
 					await tempFile.WriteLineAsync(processedLine).ConfigureAwait(false);

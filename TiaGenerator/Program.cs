@@ -2,11 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TiaGenerator.Actions;
 using TiaGenerator.Core.Services;
 using TiaGenerator.Services;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 using ISerializer = TiaGenerator.Core.Services.ISerializer;
 
 namespace TiaGenerator
@@ -58,21 +55,7 @@ namespace TiaGenerator
 			builder.ConfigureServices(services =>
 			{
 				services.AddSingleton(Options);
-				services.AddSingleton<ISerializer, YamlSerializer>(_ => new YamlSerializer
-				{
-					Serializer = new SerializerBuilder()
-						.WithNamingConvention(UnderscoredNamingConvention.Instance)
-						.WithTagMapping("!CreatePlcAction", typeof(CreatePlcAction))
-						.WithTagMapping("!OpenProjectAction", typeof(OpenProjectAction))
-						.WithTagMapping("!CopyProjectAction", typeof(CopyProjectAction))
-						.Build(),
-					Deserializer = new DeserializerBuilder()
-						.WithNamingConvention(UnderscoredNamingConvention.Instance)
-						.WithTagMapping("!CreatePlcAction", typeof(CreatePlcAction))
-						.WithTagMapping("!OpenProjectAction", typeof(OpenProjectAction))
-						.WithTagMapping("!CopyProjectAction", typeof(CopyProjectAction))
-						.Build()
-				});
+				services.AddSingleton<ISerializer, YamlSerializer>();
 				services.AddSingleton<DataProviderService>();
 				services.AddHostedService<TiaGeneratorService>();
 			});
