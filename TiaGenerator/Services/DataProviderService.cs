@@ -22,8 +22,7 @@ namespace TiaGenerator.Services
 		{
 			try
 			{
-				var data = _serializer.Deserialize<GeneratorConfiguration>(_options.DataFilePath);
-				return data;
+				return _serializer.Deserialize<GeneratorConfiguration>(_options.DataFilePath);
 			}
 			catch (Exception e)
 			{

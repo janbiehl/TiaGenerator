@@ -43,7 +43,7 @@
     <ItemGroup>
         <Compile Include="Actions\CreateTiaInstanceAction.cs" />
         <Compile Include="Actions\ExportBlockAction.cs" />
-        <Compile Include="Actions\ImportAndProcessBlock.cs" />
+        <Compile Include="Actions\ProcessAndImportBlock.cs" />
         <Compile Include="Actions\PlcActions\CompilePlcAction.cs" />
         <Compile Include="Actions\PlcActions\CreatePlcAction.cs" />
         <Compile Include="Actions\PlcActions\GetFirstPlcAction.cs" />
@@ -52,6 +52,7 @@
         <Compile Include="Actions\ProjectActions\CopyProjectAction.cs" />
         <Compile Include="Actions\ProjectActions\OpenProjectAction.cs" />
         <Compile Include="Actions\ProjectActions\SaveProjectAction.cs" />
+        <Compile Include="FileManager.cs" />
         <Compile Include="Models\DataStore.cs" />
         <Compile Include="Models\GeneratorConfiguration.cs" />
         <Compile Include="Options.cs" />
@@ -97,6 +98,10 @@
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
         <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
         <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-34" />
         <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-26" />

@@ -32,8 +32,7 @@ namespace TiaGenerator.Actions
 				existingPortal?.Dispose();
 				dataStore.TiaPortal = null;
 
-				TiaPortal tiaPortal =
-					new(WithInterface ? TiaPortalMode.WithUserInterface : TiaPortalMode.WithoutUserInterface);
+				TiaPortal tiaPortal = new(WithInterface ? TiaPortalMode.WithUserInterface : TiaPortalMode.WithoutUserInterface);
 
 				dataStore.TiaPortal = tiaPortal;
 

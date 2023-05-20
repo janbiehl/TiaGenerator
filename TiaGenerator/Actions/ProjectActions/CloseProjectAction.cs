@@ -9,7 +9,7 @@ namespace TiaGenerator.Actions
 {
 	public class CloseProjectAction : GeneratorAction
 	{
-		public bool SaveProject { get; set; }
+		public bool Save { get; set; }
 
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
@@ -24,7 +24,7 @@ namespace TiaGenerator.Actions
 				var tiaProject = dataStore.TiaProject ??
 				                 throw new NullReferenceException("There is no project to close");
 
-				if (SaveProject)
+				if (Save)
 					tiaProject.Save();
 
 				tiaProject.Close();

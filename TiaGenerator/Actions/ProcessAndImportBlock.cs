@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Siemens.Engineering;
 using Siemens.Engineering.SW;
@@ -12,12 +8,11 @@ using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
 using TiaGenerator.Tia.Extensions;
-using TiaGenerator.Tia.Models;
 using TiaGenerator.Utils;
 
 namespace TiaGenerator.Actions
 {
-	public class ImportAndProcessBlock : GeneratorAction
+	public class ProcessAndImportBlock : GeneratorAction
 	{
 		public string? BlockSourceFile { get; set; }
 		public string? BlockDestinationFile { get; set; }
@@ -55,8 +50,11 @@ namespace TiaGenerator.Actions
 
 			try
 			{
-				await FileProcessorUtils.ReplaceInFile(BlockSourceFile!, Templates!);
+				File.Copy(BlockSourceFile!, BlockDestinationFile!, true);
+				await FileProcessorUtils.ReplaceInFile(BlockDestinationFile!, Templates!);
 
+				FileManager.RegisterFile(BlockDestinationFile!);
+				
 				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device in the data store.");
 

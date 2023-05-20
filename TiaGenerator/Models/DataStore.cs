@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Siemens.Engineering;
-using Siemens.Engineering.SW;
 using Siemens.Engineering.SW.Blocks;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Tia.Models;
@@ -56,7 +55,7 @@ namespace TiaGenerator.Models
 
 		public void SetValue<T>(string name, T value)
 		{
-			_data[name] = value ?? throw new ArgumentNullException(nameof(value));
+			_data[name] = value!;
 		}
 
 		/// <inheritdoc />

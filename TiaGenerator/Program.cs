@@ -1,7 +1,10 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using TiaGenerator.Core.Services;
 using TiaGenerator.Services;
 using ISerializer = TiaGenerator.Core.Services.ISerializer;
@@ -12,8 +15,9 @@ namespace TiaGenerator
 	{
 		private static Options Options { get; set; } = null!;
 
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
+			var start = DateTime.Now;
 			var invalidOptions = false;
 
 			// Parse command line options
@@ -33,36 +37,44 @@ namespace TiaGenerator
 				return;
 			}
 
-			var builder = Host.CreateDefaultBuilder(args);
-
-			// Configure the logging
-			builder.ConfigureLogging(loggingBuilder =>
-			{
-				loggingBuilder.AddSimpleConsole(options =>
-				{
-					options.SingleLine = true;
-					options.TimestampFormat = "[HH:mm:ss] ";
-				});
-
-				loggingBuilder.SetMinimumLevel(Options.Verbose ? LogLevel.Debug : LogLevel.Information);
+			// Create the logger
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Information()
 
 #if DEBUG
-				loggingBuilder.SetMinimumLevel(LogLevel.Debug);
+				.MinimumLevel.Debug()	
 #endif
-			});
+				
+				.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+				.WriteTo.Console()
+				.CreateLogger();
 
-			// Configure our services
-			builder.ConfigureServices(services =>
-			{
-				services.AddSingleton(Options);
-				services.AddSingleton<ISerializer, YamlSerializer>();
-				services.AddSingleton<DataProviderService>();
-				services.AddHostedService<TiaGeneratorService>();
-			});
+			// Create the application builder
+			var builder = Host.CreateApplicationBuilder(args);
+			
+			// Clear the default log provider
+			builder.Logging.ClearProviders();
 
-			using var host = builder.Build();
+			builder.Logging.AddSerilog(Log.Logger, true);
 
-			host.Run();
+			// Register services
+			RegisterServices(builder.Services);
+
+			using var host =  builder.Build();
+			
+			await host.RunAsync();
+			
+			var end = DateTime.Now;
+			
+			Console.WriteLine($"Duration: {end - start}");
+		}
+
+		private static void RegisterServices(IServiceCollection services)
+		{
+			services.AddSingleton(Options);
+			services.AddSingleton<ISerializer, YamlSerializer>();
+			services.AddSingleton<DataProviderService>();
+			services.AddHostedService<TiaGeneratorService>();
 		}
 	}
 }

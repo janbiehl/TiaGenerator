@@ -2,25 +2,305 @@ name: Sample Generator
 description: Dies ist der erste Test für den Generator
 author: J.Biehl
 actions:
+  # Start the tia portal
+  - !CreateTiaInstanceAction
+    type: create-tia-instance
+    with_interface: false
+  # Copy the source project to the target directory
   - !CopyProjectAction
     type: copy-project
-    source_project_file: C:/HelloWorld/Test.ap17
-    target_project_directory: C:/HelloWorld/Generated/Test.ap17
+    source_project_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Projekt1\Projekt1.ap17
+    target_project_directory: C:\Users\jbieh\AppData\Local\Temp\Tia\Generated
+  # Open a project
   - !OpenProjectAction
     type: open-project
-    project_file_path: C:/HelloWorld/Generated/Test.ap17
+    project_file_path: C:\Users\jbieh\AppData\Local\Temp\Tia\Generated\Generated.ap17
     username: UCS
     password: admin@UCS1
+  # Get the first plc
+  - !GetFirstPlcAction
+    type: get-first-plc
+  # Compile the plc
+  - !CompilePlcAction
+    type: compile-plc
+  # Save the project
+  - !SaveProjectAction
+      type: save-project
+  # Export a block from that plc
   - !ExportBlockAction
     type: export-block
     block_name: TestBlock
-    file_path: C:/HelloWorld/Generated/Test.ap17
-  - !ImportAndProcessBlock
+    file_path: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+  # Process and import the block
+  - !ProcessAndImportBlock
     type: import-and-process-block
-    block_source_file: C:/HelloWorld/Test.ap17
-    block_destination_file: C:/HelloWorld/Generated/Test.ap17
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
     block_group: Test/Hello/World
     templates:
-      Hello: World
-      Test: Testi
-      (?<=<Name>)[^<]+(?=</Name>): Dummy
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0001
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl2
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0002
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl3
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0003
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl4
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0004
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl5
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0005  
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl6
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0006
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl7
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0007
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl8
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0008
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl9
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0009
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl10
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0010
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl11
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0011
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl12
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0012
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl13
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0013
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl14
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0014
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl15
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0015
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl16
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0016
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl17
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0017
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl18
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0018
+      
+      
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl19
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0019
+    
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl20
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      xxxx: 0020
+      
+  # Continue the series
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl21
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl22
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+  
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl23
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      
+  - !ProcessAndImportBlock
+    type: import-and-process-block
+    block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
+    block_destination_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
+    block_group: Test/Hello/World
+    templates:
+      (?<=<Name>)[^<]+(?=</Name>): JanBiehl24
+      (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
+      (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+    
+  # Compile the plc
+  - !CompilePlcAction
+    type: compile-plc
+  - !CloseProjectAction
+    type: close-project
+    save: true
+  

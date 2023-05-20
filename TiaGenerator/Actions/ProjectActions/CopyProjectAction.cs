@@ -32,10 +32,13 @@ namespace TiaGenerator.Actions
 
 			try
 			{
-				var tiaPortal = new TiaPortal();
+				var tiaPortal = dataStore.TiaPortal ?? throw new Exception("TIA Portal is not open");
+
 				var project = tiaPortal.Projects.Open(new FileInfo(SourceProjectFile!));
 
 				ProjectUtils.SaveProjectAsNew(project, TargetProjectDirectory!);
+				
+				project.Close();
 				return Task.FromResult(new ActionResult(ActionResultType.Success, "Project copied"));
 			}
 			catch (Exception e)

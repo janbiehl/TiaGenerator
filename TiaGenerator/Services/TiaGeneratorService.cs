@@ -11,13 +11,15 @@ namespace TiaGenerator.Services
 	public class TiaGeneratorService : BackgroundService
 	{
 		private readonly ILogger<TiaGeneratorService> _logger;
+		private readonly Options _options;
 		private readonly DataProviderService _dataProvider;
 		private readonly IHostApplicationLifetime _applicationLifetime;
 
-		public TiaGeneratorService(ILogger<TiaGeneratorService> logger, DataProviderService dataProvider
+		public TiaGeneratorService(ILogger<TiaGeneratorService> logger, Options options, DataProviderService dataProvider
 			, IHostApplicationLifetime applicationLifetime)
 		{
 			_logger = logger;
+			_options = options;
 			_dataProvider = dataProvider;
 			_applicationLifetime = applicationLifetime;
 		}
@@ -41,7 +43,7 @@ namespace TiaGenerator.Services
 				_logger.LogError("No data loaded.");
 			}
 
-			_logger.LogDebug("Data loaded {Data}", data);
+			_logger.LogDebug("Data loaded {@Data}", data);
 
 			using var dataStore = new DataStore();
 
@@ -49,6 +51,12 @@ namespace TiaGenerator.Services
 			{
 				foreach (var action in data.Actions)
 				{
+					if (stoppingToken.IsCancellationRequested)
+					{
+						_logger.LogInformation("Cancellation requested. Stopping.");
+						break;
+					}
+					
 					try
 					{
 						var result = await action.Execute(dataStore);
@@ -76,6 +84,9 @@ namespace TiaGenerator.Services
 				}
 			}
 
+			if (_options.Cleanup)
+				FileManager.Cleanup();
+			
 			_applicationLifetime.StopApplication();
 		}
 	}
