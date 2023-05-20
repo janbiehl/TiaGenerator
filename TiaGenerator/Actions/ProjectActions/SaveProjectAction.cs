@@ -10,15 +10,20 @@ namespace TiaGenerator.Actions
 	public class SaveProjectAction : GeneratorAction
 	{
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			try
 			{
-				var project = datastore.GetValue<Project>(DataStore.TiaProjectKey) ??
+				var project = dataStore.TiaProject ??
 				              throw new NullReferenceException("There is no project to save.");
 
 				project.Save();
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project saved."));
+				return Task.FromResult(new ActionResult(ActionResultType.Success, "Project saved."));
 			}
 			catch (Exception e)
 			{

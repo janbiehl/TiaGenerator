@@ -1,5 +1,6 @@
 <#@ template language="C#" #>
 <#@ import namespace="System.Collections.Generic" #>
+^<#@ import namespace="System.Linq" #>
 <?xml version="1.0" encoding="utf-8"?>
 <Document>
   <Engineering version="V17"/>
@@ -18,10 +19,6 @@
       <OptionPackage>
         <DisplayName>TIA Portal Version Control Interface</DisplayName>
         <DisplayVersion>V17</DisplayVersion>
-      </OptionPackage>
-      <OptionPackage>
-        <DisplayName>TIA Portal Test Suite Advanced</DisplayName>
-        <DisplayVersion>V17 Update 1</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>STEP 7 Professional</DisplayName>
@@ -72,7 +69,7 @@
         </ObjectList>
       </MultilingualText>
 
-      <!-- Generated Stuff -->
+      <!-- Start Generated Stuff -->
 <#
     foreach (var network in Networks)
     {
@@ -81,7 +78,7 @@
 <#
     }
 #>
-      <!-- Generated Stuff -->
+      <!-- End Generated Stuff -->
       
       <MultilingualText ID="3" CompositionName="Title">
         <ObjectList>
@@ -103,7 +100,7 @@
     public string Family { get; set; } = string.Empty;
     public string BlockName { get; set; } = null!;
     public int BlockNumber { get; set; }
-    public List<string> Networks { get; set; } = new();
+    public IEnumerable<string> Networks { get; set; } = Enumerable.Empty<string>();
 
     public TemplateBlockFC()
     {

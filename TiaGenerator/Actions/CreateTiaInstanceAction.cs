@@ -13,24 +13,31 @@ namespace TiaGenerator.Actions
 		public bool WithInterface { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			try
 			{
 				// Close project, when there is one
-				var project = datastore.GetValue<Project>(DataStore.TiaPortalKey);
+				var project = dataStore.TiaProject;
 				project?.Close();
+				dataStore.TiaPortal = null;
 
 				// Close tia portal, when there is one
-				var existingPortal = datastore.GetValue<TiaPortal>(DataStore.TiaPortalKey);
+				var existingPortal = dataStore.TiaPortal;
 				existingPortal?.Dispose();
+				dataStore.TiaPortal = null;
 
 				TiaPortal tiaPortal =
 					new(WithInterface ? TiaPortalMode.WithUserInterface : TiaPortalMode.WithoutUserInterface);
 
-				datastore.SetValue(DataStore.TiaPortalKey, tiaPortal);
+				dataStore.TiaPortal = tiaPortal;
 
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "TIA Portal instance created"));
+				return Task.FromResult(new ActionResult(ActionResultType.Success, "TIA Portal instance created"));
 			}
 			catch (Exception e)
 			{

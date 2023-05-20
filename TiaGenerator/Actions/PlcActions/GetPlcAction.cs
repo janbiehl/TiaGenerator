@@ -14,24 +14,29 @@ namespace TiaGenerator.Actions
 		public string? PlcName { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			try
 			{
 				if (string.IsNullOrWhiteSpace(PlcName))
-					return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "No PLC name specified."));
+					return Task.FromResult(new ActionResult(ActionResultType.Fatal, "No PLC name specified."));
 
-				var tiaProject = datastore.GetValue<Project>(DataStore.TiaProjectKey);
+				var tiaProject = dataStore.TiaProject;
 
 				if (tiaProject is null)
-					return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "No TIA project found."));
+					return Task.FromResult(new ActionResult(ActionResultType.Fatal, "No TIA project found."));
 
 				var plcDevices = DeviceUtils.FindAnyPlcDevices(tiaProject);
 				var plcDevice = plcDevices.FirstOrDefault(x => x.PlcSoftware.Name == PlcName) ??
 				                throw new NullReferenceException("The PLC device could not be found.");
 
-				datastore.SetValue(DataStore.TiaPlcDeviceKey, plcDevice);
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success,
+				dataStore.TiaPlcDevice = plcDevice;
+				return Task.FromResult(new ActionResult(ActionResultType.Success,
 					$"Found PLC device '{plcDevice.PlcSoftware.Name}'."));
 			}
 			catch (Exception e)

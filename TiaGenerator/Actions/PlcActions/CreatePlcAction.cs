@@ -18,25 +18,30 @@ namespace TiaGenerator.Actions
 		public string? PlcOrderNumber { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore dataStore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			if (string.IsNullOrWhiteSpace(PlcName))
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "PLC name is not set"));
+				return Task.FromResult(new ActionResult(ActionResultType.Fatal, "PLC name is not set"));
 
 			if (string.IsNullOrWhiteSpace(PlcOrderNumber))
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "PLC order number is not set"));
+				return Task.FromResult(new ActionResult(ActionResultType.Fatal, "PLC order number is not set"));
 
 			try
 			{
-				var tiaProject = dataStore.GetValue<Project>(DataStore.TiaProjectKey);
+				var tiaProject = dataStore.TiaProject;
 
 				var device = tiaProject.CreateDevice($"OrderNumber:{PlcOrderNumber}", "newDevice", PlcName!);
 
 				PlcDevice plcDevice = new(device);
 
-				dataStore.SetValue(DataStore.TiaPlcDeviceKey, plcDevice);
+				dataStore.TiaPlcDevice = plcDevice;
 
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Device created"));
+				return Task.FromResult(new ActionResult(ActionResultType.Success, "Device created"));
 			}
 			catch (Exception e)
 			{

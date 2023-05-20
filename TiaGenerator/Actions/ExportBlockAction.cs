@@ -4,7 +4,6 @@ using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
 using TiaGenerator.Tia.Extensions;
-using TiaGenerator.Tia.Models;
 
 namespace TiaGenerator.Actions
 {
@@ -14,8 +13,13 @@ namespace TiaGenerator.Actions
 		public string? FilePath { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			if (string.IsNullOrWhiteSpace(BlockName))
 				throw new InvalidOperationException("Block name is not set properly");
 
@@ -24,7 +28,7 @@ namespace TiaGenerator.Actions
 
 			try
 			{
-				var plcDevice = datastore.GetValue<PlcDevice>(DataStore.TiaPlcDeviceKey) ??
+				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device to export block from.");
 
 				var block = plcDevice.PlcSoftware.BlockGroup.Blocks.Find(BlockName) ??
@@ -32,7 +36,7 @@ namespace TiaGenerator.Actions
 
 				block.ExportToFile(FilePath!);
 
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success,
+				return Task.FromResult(new ActionResult(ActionResultType.Success,
 					$"Block '{block.Name}' exported to '{FilePath}'"));
 			}
 			catch (Exception e)

@@ -53,6 +53,7 @@
         <Compile Include="Actions\ProjectActions\OpenProjectAction.cs" />
         <Compile Include="Actions\ProjectActions\SaveProjectAction.cs" />
         <Compile Include="Models\DataStore.cs" />
+        <Compile Include="Models\GeneratorConfiguration.cs" />
         <Compile Include="Options.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +75,7 @@
           <DependentUpon>TemplateFcBlockCall.tt</DependentUpon>
         </Compile>
         <Compile Include="Utils\FileProcessorUtils.cs" />
+        <Compile Include="Utils\PathUtils.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="Sample\sample.yaml">
@@ -96,7 +98,7 @@
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
         <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
-        <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-33" />
+        <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-34" />
         <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-26" />
         <PackageReference Include="YamlDotNet" Version="13.1.0" />
     </ItemGroup>

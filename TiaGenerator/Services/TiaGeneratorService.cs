@@ -55,13 +55,13 @@ namespace TiaGenerator.Services
 
 						switch (result.Result)
 						{
-							case ActionResult.Failure:
+							case ActionResultType.Failure:
 								_logger.LogError(result.Message);
 								break;
-							case ActionResult.Fatal:
+							case ActionResultType.Fatal:
 								_logger.LogCritical(result.Message);
 								break;
-							case ActionResult.Success:
+							case ActionResultType.Success:
 								_logger.LogInformation(result.Message);
 								break;
 							default:

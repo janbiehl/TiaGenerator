@@ -10,6 +10,7 @@ using Siemens.Engineering;
 using Siemens.Engineering.SW;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
+using TiaGenerator.Models;
 using TiaGenerator.Tia.Extensions;
 using TiaGenerator.Tia.Models;
 using TiaGenerator.Utils;
@@ -29,20 +30,25 @@ namespace TiaGenerator.Actions
 		public List<KeyValuePair<string, string>>? Templates { get; set; }
 
 		/// <inheritdoc />
-		public override async Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override async Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			if (string.IsNullOrWhiteSpace(BlockSourceFile))
-				return new GeneratorActionResult(ActionResult.Failure, "No block file specified.");
+				return new ActionResult(ActionResultType.Failure, "No block file specified.");
 
 			if (string.IsNullOrWhiteSpace(BlockDestinationFile))
-				return new GeneratorActionResult(ActionResult.Failure, "No block destination file specified.");
+				return new ActionResult(ActionResultType.Failure, "No block destination file specified.");
 
 			if (!File.Exists(BlockSourceFile))
-				return new GeneratorActionResult(ActionResult.Failure,
+				return new ActionResult(ActionResultType.Failure,
 					$"Block file '{BlockSourceFile}' does not exist.");
 
 			if (string.IsNullOrWhiteSpace(BlockGroup))
-				return new GeneratorActionResult(ActionResult.Failure, "No block group specified.");
+				return new ActionResult(ActionResultType.Failure, "No block group specified.");
 
 			try
 			{
@@ -74,10 +80,10 @@ namespace TiaGenerator.Actions
 					SWImportOptions.IgnoreUnitAttributes);
 
 				if (blocks.Count <= 0)
-					return new GeneratorActionResult(ActionResult.Failure,
+					return new ActionResult(ActionResultType.Failure,
 						$"No blocks imported from '{BlockDestinationFile}'.");
 
-				return new GeneratorActionResult(ActionResult.Success, $"Imported {blocks.Count} blocks.");
+				return new ActionResult(ActionResultType.Success, $"Imported {blocks.Count} blocks.");
 			}
 			catch (Exception e)
 			{

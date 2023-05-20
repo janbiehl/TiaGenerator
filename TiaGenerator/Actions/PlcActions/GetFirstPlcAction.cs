@@ -11,18 +11,24 @@ namespace TiaGenerator.Actions
 	public class GetFirstPlcAction : GeneratorAction
 	{
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			try
 			{
-				var tiaProject = datastore.GetValue<Project>(DataStore.TiaProjectKey) ??
+				var tiaProject = dataStore.TiaProject ??
 				                 throw new InvalidOperationException("There is no project to get the first plc from.");
 
 				var plcDevice = tiaProject.FindFirstPlcDevice() ??
 				                throw new InvalidOperationException("There is no plc device in the project.");
 
-				datastore.SetValue(DataStore.TiaPlcDeviceKey, plcDevice);
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success,
+				dataStore.TiaPlcDevice = plcDevice;
+
+				return Task.FromResult(new ActionResult(ActionResultType.Success,
 					$"PLC device '{plcDevice.PlcSoftware.Name}' found"));
 			}
 			catch (Exception e)

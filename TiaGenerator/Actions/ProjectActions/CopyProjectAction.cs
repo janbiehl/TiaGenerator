@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
+using TiaGenerator.Models;
 using TiaGenerator.Tia.Utils;
 
 namespace TiaGenerator.Actions
@@ -15,13 +16,18 @@ namespace TiaGenerator.Actions
 		public string? TargetProjectDirectory { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore dataStore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			if (string.IsNullOrWhiteSpace(SourceProjectFile))
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal, "Source project file is not set"));
+				return Task.FromResult(new ActionResult(ActionResultType.Fatal, "Source project file is not set"));
 
 			if (string.IsNullOrWhiteSpace(TargetProjectDirectory))
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Fatal,
+				return Task.FromResult(new ActionResult(ActionResultType.Fatal,
 					"Target project directory is not set"));
 
 			try
@@ -30,7 +36,7 @@ namespace TiaGenerator.Actions
 				var project = tiaPortal.Projects.Open(new FileInfo(SourceProjectFile!));
 
 				ProjectUtils.SaveProjectAsNew(project, TargetProjectDirectory!);
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project copied"));
+				return Task.FromResult(new ActionResult(ActionResultType.Success, "Project copied"));
 			}
 			catch (Exception e)
 			{

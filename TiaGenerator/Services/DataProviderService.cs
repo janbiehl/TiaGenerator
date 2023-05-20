@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
-using TiaGenerator.Core.Models;
 using TiaGenerator.Core.Services;
+using TiaGenerator.Models;
 
 namespace TiaGenerator.Services
 {

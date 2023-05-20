@@ -85,9 +85,7 @@ namespace TiaGenerator.Templates
 
     private static int GetId()
     {
-        _id++;
-
-        return _id;
+        return _id++;
     }
 
         

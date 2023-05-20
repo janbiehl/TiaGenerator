@@ -12,11 +12,16 @@ namespace TiaGenerator.Actions
 		public bool SaveProject { get; set; }
 
 		/// <inheritdoc />
-		public override Task<GeneratorActionResult> Execute(IDataStore datastore)
+		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			if (datastore is not DataStore dataStore)
+			{
+				throw new InvalidOperationException("Invalid datastore");
+			}
+
 			try
 			{
-				var tiaProject = datastore.GetValue<Project>(DataStore.TiaProjectKey) ??
+				var tiaProject = dataStore.TiaProject ??
 				                 throw new NullReferenceException("There is no project to close");
 
 				if (SaveProject)
@@ -24,7 +29,7 @@ namespace TiaGenerator.Actions
 
 				tiaProject.Close();
 
-				return Task.FromResult(new GeneratorActionResult(ActionResult.Success, "Project closed"));
+				return Task.FromResult(new ActionResult(ActionResultType.Success, "Project closed"));
 			}
 			catch (Exception e)
 			{
