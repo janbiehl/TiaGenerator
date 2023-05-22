@@ -13,7 +13,7 @@ namespace TiaGenerator.Actions
 	public class ExportBlockAction : GeneratorAction
 	{
 		private readonly ILogger _logger;
-		
+
 		public string? BlockName { get; set; }
 		public string? FilePath { get; set; }
 
@@ -21,7 +21,7 @@ namespace TiaGenerator.Actions
 		{
 			_logger = Log.Logger;
 		}
-		
+
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
@@ -39,7 +39,7 @@ namespace TiaGenerator.Actions
 			try
 			{
 				_logger.Debug("Exporting block started..");
-				
+
 				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device to export block from.");
 
@@ -52,11 +52,11 @@ namespace TiaGenerator.Actions
 					Directory.CreateDirectory(directory!);
 					FileManager.RegisterDirectory(directory!);
 				}
-				
+
 				block.ExportToFile(FilePath!);
 
 				FileManager.RegisterFile(FilePath!);
-				
+
 				return Task.FromResult(new ActionResult(ActionResultType.Success,
 					$"Exported block '{BlockName}' to '{FilePath}'"));
 			}

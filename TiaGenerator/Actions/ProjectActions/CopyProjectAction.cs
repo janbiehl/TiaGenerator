@@ -36,7 +36,7 @@ namespace TiaGenerator.Actions
 				var project = tiaPortal.Projects.Open(new FileInfo(SourceProjectFile!));
 
 				ProjectUtils.SaveProjectAsNew(project, TargetProjectDirectory!);
-				
+
 				project.Close();
 				return Task.FromResult(new ActionResult(ActionResultType.Success, "Project copied"));
 			}
