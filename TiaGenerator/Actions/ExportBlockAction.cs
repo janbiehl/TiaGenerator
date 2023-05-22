@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
