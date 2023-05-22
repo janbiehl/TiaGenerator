@@ -42,8 +42,11 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Actions\CreateTiaInstanceAction.cs" />
-        <Compile Include="Actions\ExportBlockAction.cs" />
-        <Compile Include="Actions\ProcessAndImportBlock.cs" />
+        <Compile Include="Actions\FileActions\ProcessBlockFileAction.cs" />
+        <Compile Include="Actions\PlcActions\BlockActions\CreateCallingFC.cs" />
+        <Compile Include="Actions\PlcActions\BlockActions\ExportBlockAction.cs" />
+        <Compile Include="Actions\PlcActions\BlockActions\ImportBlockAction.cs" />
+        <Compile Include="Actions\PlcActions\BlockActions\ProcessAndImportBlock.cs" />
         <Compile Include="Actions\PlcActions\CompilePlcAction.cs" />
         <Compile Include="Actions\PlcActions\CreatePlcAction.cs" />
         <Compile Include="Actions\PlcActions\GetFirstPlcAction.cs" />
@@ -104,7 +107,7 @@
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
         <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
         <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-34" />
-        <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-26" />
+        <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-27" />
         <PackageReference Include="YamlDotNet" Version="13.1.0" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
