@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -79,13 +80,13 @@ namespace TiaGenerator.Actions
 
 			if (datastore is not DataStore dataStore)
 			{
-				throw new System.InvalidOperationException("Invalid datastore");
+				throw new InvalidOperationException("Invalid datastore");
 			}
 
 			var plcDevice = dataStore.TiaPlcDevice ??
-			                throw new System.InvalidOperationException("There is no plc device in the data store.");
+			                throw new InvalidOperationException("There is no plc device in the data store.");
 
-			var targetBlockGroup = PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup.Split('/'));
+			var targetBlockGroup = PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup!.Split('/'));
 
 			if (targetBlockGroup is null)
 				return Task.FromResult(new ActionResult(ActionResultType.Failure,
@@ -97,7 +98,6 @@ namespace TiaGenerator.Actions
 			foreach (var block in targetBlockGroup.Blocks)
 			{
 				var blockType = block.GetBlockType();
-				string? blockContent = null;
 
 				switch (blockType)
 				{
@@ -122,25 +122,33 @@ namespace TiaGenerator.Actions
 						networks.Add(dummy.TransformText());
 						break;
 					}
+					case BlockType.Undefined:
+					case BlockType.Ob:
+					case BlockType.Db:
+					case BlockType.Idb:
+					case BlockType.Adb:
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
 				}
 			}
 
 			TemplateBlockFC blockFc = new()
 			{
-				BlockName = BlockName,
-				Author = Author,
-				Family = Family,
+				BlockName = BlockName!,
+				Author = Author!,
+				Family = Family!,
 				AutoNumber = AutoNumber,
 				BlockNumber = BlockNumber,
 				Networks = networks
 			};
 
-			var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName);
+			var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
 			FileManager.RegisterFile(tempBlockFilePath);
 
 			File.WriteAllText(tempBlockFilePath, blockFc.TransformText());
 
-			var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup.Split('/'));
+			var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
 			var importedBlocks = blockGroup.Blocks.ImportBlocksFromFile(tempBlockFilePath, ImportOptions.None,
 				SWImportOptions.IgnoreStructuralChanges | SWImportOptions.IgnoreUnitAttributes |
 				SWImportOptions.IgnoreMissingReferencedObjects);
