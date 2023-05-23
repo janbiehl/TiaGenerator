@@ -28,5 +28,12 @@ namespace TiaGenerator
 		/// </summary>
 		[Option('c', "cleanup", Required = false, Default = true, HelpText = "Cleanup temporary files.")]
 		public bool Cleanup { get; set; }
+
+		/// <summary>
+		/// This endpoint will be used for OpenTelemetry tracing
+		/// </summary>
+		[Option('o', "openTelemetry", Required = false, Default = null,
+			HelpText = "OpenTelemetry endpoint. Example: http://localhost:4317/v1/trace")]
+		public string? OpenTelemetryEndpoint { get; set; }
 	}
 }

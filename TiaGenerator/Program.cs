@@ -4,6 +4,9 @@ using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 using Serilog;
 using TiaGenerator.Core.Services;
 using TiaGenerator.Services;
@@ -42,16 +45,30 @@ namespace TiaGenerator
 				.MinimumLevel.Information()
 
 #if DEBUG
-				.MinimumLevel.Debug()	
+				.MinimumLevel.Debug()
 #endif
-				
+
 				.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
 				.WriteTo.Console()
 				.CreateLogger();
 
+			// Add open telemetry tracing when enabled
+			if (!string.IsNullOrWhiteSpace(Options.OpenTelemetryEndpoint))
+			{
+				// Open telemetry tracing
+				Sdk.CreateTracerProviderBuilder()
+					.AddSource(Tia.Tracing.InstrumentationName)
+					.AddOtlpExporter(options =>
+					{
+						options.Endpoint = new Uri(Options.OpenTelemetryEndpoint!);
+						options.Protocol = OtlpExportProtocol.Grpc;
+					})
+					.Build();
+			}
+
 			// Create the application builder
 			var builder = Host.CreateApplicationBuilder(args);
-			
+
 			// Clear the default log provider
 			builder.Logging.ClearProviders();
 
@@ -60,12 +77,12 @@ namespace TiaGenerator
 			// Register services
 			RegisterServices(builder.Services);
 
-			using var host =  builder.Build();
-			
+			using var host = builder.Build();
+
 			await host.RunAsync();
-			
+
 			var end = DateTime.Now;
-			
+
 			Console.WriteLine($"Duration: {end - start}");
 		}
 
