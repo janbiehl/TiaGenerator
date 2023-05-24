@@ -296,7 +296,15 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl24
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
-    
+  - !CreateCallingFC
+    type: create-calling-fc
+    target_block_group: Test/Hello/World
+    block_group: Test/Hello
+    block_name: GroupCallBlock
+    author: JBI
+    family: Sample
+    block_number: 8888
+    auto_number: false
   # Compile the plc
   - !CompilePlcAction
     type: compile-plc
