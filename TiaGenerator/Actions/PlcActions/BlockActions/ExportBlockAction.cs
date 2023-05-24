@@ -26,9 +26,7 @@ namespace TiaGenerator.Actions
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
 			if (datastore is not DataStore dataStore)
-			{
 				throw new InvalidOperationException("Invalid datastore");
-			}
 
 			if (string.IsNullOrWhiteSpace(BlockName))
 				throw new InvalidOperationException("Block name is not set properly");
@@ -53,6 +51,9 @@ namespace TiaGenerator.Actions
 					FileManager.RegisterDirectory(directory!);
 				}
 
+				if (File.Exists(FilePath))
+					File.Delete(FilePath!);
+				
 				block.ExportToFile(FilePath!);
 
 				FileManager.RegisterFile(FilePath!);
