@@ -17,7 +17,7 @@ namespace TiaGenerator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+    #line 1 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class TemplateBlockFC : TemplateBlockFCBase
     {
@@ -27,45 +27,44 @@ namespace TiaGenerator.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("^");
-            this.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Document>\n  <Engineering version=\"V17\"/>\n  <DocumentInfo>\n    <Created>2023-03-16T18:56:23.8618408Z</Created>\n    <ExportSetting>None</ExportSetting>\n    <InstalledProducts>\n      <Product>\n        <DisplayName>Totally Integrated Automation Portal</DisplayName>\n        <DisplayVersion>V17 Update 5</DisplayVersion>\n      </Product>\n      <OptionPackage>\n        <DisplayName>TIA Portal Openness</DisplayName>\n        <DisplayVersion>V17 Update 5</DisplayVersion>\n      </OptionPackage>\n      <OptionPackage>\n        <DisplayName>TIA Portal Version Control Interface</DisplayName>\n        <DisplayVersion>V17</DisplayVersion>\n      </OptionPackage>\n      <Product>\n        <DisplayName>STEP 7 Professional</DisplayName>\n        <DisplayVersion>V17 Update 5</DisplayVersion>\n      </Product>\n      <OptionPackage>\n        <DisplayName>STEP 7 Safety</DisplayName>\n        <DisplayVersion>V17</DisplayVersion>\n      </OptionPackage>\n      <Product>\n        <DisplayName>WinCC Advanced</DisplayName>\n        <DisplayVersion>V17 Update 5</DisplayVersion>\n      </Product>\n    </InstalledProducts>\n  </DocumentInfo>\n  <SW.Blocks.FC ID=\"0\">\n    <AttributeList>\n      <AutoNumber>");
+            this.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Document>\r\n  <Engineering version=\"V17\"/>\r\n  <DocumentInfo>\r\n    <Created>2023-03-16T18:56:23.8618408Z</Created>\r\n    <ExportSetting>None</ExportSetting>\r\n    <InstalledProducts>\r\n      <Product>\r\n        <DisplayName>Totally Integrated Automation Portal</DisplayName>\r\n        <DisplayVersion>V17 Update 5</DisplayVersion>\r\n      </Product>\r\n      <OptionPackage>\r\n        <DisplayName>TIA Portal Openness</DisplayName>\r\n        <DisplayVersion>V17 Update 5</DisplayVersion>\r\n      </OptionPackage>\r\n      <OptionPackage>\r\n        <DisplayName>TIA Portal Version Control Interface</DisplayName>\r\n        <DisplayVersion>V17</DisplayVersion>\r\n      </OptionPackage>\r\n      <Product>\r\n        <DisplayName>STEP 7 Professional</DisplayName>\r\n        <DisplayVersion>V17 Update 5</DisplayVersion>\r\n      </Product>\r\n      <OptionPackage>\r\n        <DisplayName>STEP 7 Safety</DisplayName>\r\n        <DisplayVersion>V17</DisplayVersion>\r\n      </OptionPackage>\r\n      <Product>\r\n        <DisplayName>WinCC Advanced</DisplayName>\r\n        <DisplayVersion>V17 Update 5</DisplayVersion>\r\n      </Product>\r\n    </InstalledProducts>\r\n  </DocumentInfo>\r\n  <SW.Blocks.FC ID=\"0\">\r\n    <AttributeList>\r\n      <AutoNumber>");
             
-            #line 39 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 39 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AutoNumber.ToString().ToLower()));
             
             #line default
             #line hidden
-            this.Write("</AutoNumber>\n      <HeaderAuthor>");
+            this.Write("</AutoNumber>\r\n      <HeaderAuthor>");
             
-            #line 40 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 40 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Author));
             
             #line default
             #line hidden
-            this.Write("</HeaderAuthor>\n      <HeaderFamily>");
+            this.Write("</HeaderAuthor>\r\n      <HeaderFamily>");
             
-            #line 41 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 41 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Family));
             
             #line default
             #line hidden
-            this.Write("</HeaderFamily>\n      <Interface>\n        <Sections xmlns=\"http://www.siemens.com/automation/Openness/SW/Interface/v5\">\n          <Section Name=\"Input\" />\n          <Section Name=\"Output\" />\n          <Section Name=\"InOut\" />\n          <Section Name=\"Temp\" />\n          <Section Name=\"Constant\" />\n          <Section Name=\"Return\">\n            <Member Name=\"Ret_Val\" Datatype=\"Void\" />\n          </Section>\n        </Sections>\n      </Interface>\n      <MemoryLayout>Optimized</MemoryLayout>\n      <Name>");
+            this.Write("</HeaderFamily>\r\n      <Interface>\r\n        <Sections xmlns=\"http://www.siemens.com/automation/Openness/SW/Interface/v5\">\r\n          <Section Name=\"Input\" />\r\n          <Section Name=\"Output\" />\r\n          <Section Name=\"InOut\" />\r\n          <Section Name=\"Temp\" />\r\n          <Section Name=\"Constant\" />\r\n          <Section Name=\"Return\">\r\n            <Member Name=\"Ret_Val\" Datatype=\"Void\" />\r\n          </Section>\r\n        </Sections>\r\n      </Interface>\r\n      <MemoryLayout>Optimized</MemoryLayout>\r\n      <Name>");
             
-            #line 55 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 55 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockName));
             
             #line default
             #line hidden
-            this.Write("</Name>\n      <Number>");
+            this.Write("</Name>\r\n      <Number>");
             
-            #line 56 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 56 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockNumber));
             
             #line default
             #line hidden
-            this.Write("</Number>\n      <ProgrammingLanguage>LAD</ProgrammingLanguage>\n      <SetENOAutomatically>false</SetENOAutomatically>\n    </AttributeList>\n    <ObjectList>\n      <MultilingualText ID=\"1\" CompositionName=\"Comment\">\n        <ObjectList>\n          <MultilingualTextItem ID=\"2\" CompositionName=\"Items\">\n            <AttributeList>\n              <Culture>de-DE</Culture>\n              <Text />\n            </AttributeList>\n          </MultilingualTextItem>\n        </ObjectList>\n      </MultilingualText>\n\n      <!-- Start Generated Stuff -->\n");
+            this.Write("</Number>\r\n      <ProgrammingLanguage>LAD</ProgrammingLanguage>\r\n      <SetENOAutomatically>false</SetENOAutomatically>\r\n    </AttributeList>\r\n    <ObjectList>\r\n      <MultilingualText ID=\"1\" CompositionName=\"Comment\">\r\n        <ObjectList>\r\n          <MultilingualTextItem ID=\"2\" CompositionName=\"Items\">\r\n            <AttributeList>\r\n              <Culture>de-DE</Culture>\r\n              <Text />\r\n            </AttributeList>\r\n          </MultilingualTextItem>\r\n        </ObjectList>\r\n      </MultilingualText>\r\n\r\n      <!-- Start Generated Stuff -->\r\n");
             
-            #line 73 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 73 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
 
     foreach (var network in Networks)
     {
@@ -75,32 +74,32 @@ namespace TiaGenerator.Templates
             #line hidden
             this.Write("      ");
             
-            #line 77 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 77 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(network));
             
             #line default
             #line hidden
-            this.Write("\n");
+            this.Write("\r\n");
             
-            #line 78 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 78 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
 
     }
 
             
             #line default
             #line hidden
-            this.Write("      <!-- End Generated Stuff -->\n      \n      <MultilingualText ID=\"3\" CompositionName=\"Title\">\n        <ObjectList>\n          <MultilingualTextItem ID=\"4\" CompositionName=\"Items\">\n            <AttributeList>\n              <Culture>de-DE</Culture>\n              <Text>");
+            this.Write("      <!-- End Generated Stuff -->\r\n      \r\n      <MultilingualText ID=\"3\" CompositionName=\"Title\">\r\n        <ObjectList>\r\n          <MultilingualTextItem ID=\"4\" CompositionName=\"Items\">\r\n            <AttributeList>\r\n              <Culture>de-DE</Culture>\r\n              <Text>");
             
-            #line 88 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+            #line 88 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockName));
             
             #line default
             #line hidden
-            this.Write("</Text>\n            </AttributeList>\n          </MultilingualTextItem>\n        </ObjectList>\n      </MultilingualText>\n    </ObjectList>\n  </SW.Blocks.FC>\n</Document>\n\n");
+            this.Write("</Text>\r\n            </AttributeList>\r\n          </MultilingualTextItem>\r\n        </ObjectList>\r\n      </MultilingualText>\r\n    </ObjectList>\r\n  </SW.Blocks.FC>\r\n</Document>\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 97 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateBlockFC.tt"
+        #line 97 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateBlockFC.tt"
 
     public bool AutoNumber { get; set; }
     public string Author { get; set; } = string.Empty;

@@ -15,7 +15,7 @@ namespace TiaGenerator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+    #line 1 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class TemplateFbBlockCall : TemplateFbBlockCallBase
     {
@@ -27,65 +27,65 @@ namespace TiaGenerator.Templates
         {
             this.Write("<SW.Blocks.CompileUnit ID=\"");
             
-            #line 2 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 2 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetId()));
             
             #line default
             #line hidden
-            this.Write("\" CompositionName=\"CompileUnits\">\n    <AttributeList>\n        <NetworkSource>\n            <FlgNet xmlns=\"http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4\">\n                <Parts>\n                    <Call UId=\"21\">\n                        <CallInfo Name=\"");
+            this.Write("\" CompositionName=\"CompileUnits\">\r\n    <AttributeList>\r\n        <NetworkSource>\r\n            <FlgNet xmlns=\"http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4\">\r\n                <Parts>\r\n                    <Call UId=\"21\">\r\n                        <CallInfo Name=\"");
             
-            #line 8 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 8 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockName));
             
             #line default
             #line hidden
-            this.Write("\" BlockType=\"FB\">\n                            <Instance Scope=\"GlobalVariable\" UId=\"22\">\n                                <Component Name=\"");
+            this.Write("\" BlockType=\"FB\">\r\n                            <Instance Scope=\"GlobalVariable\" UId=\"22\">\r\n                                <Component Name=\"");
             
-            #line 10 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 10 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockInstanceName));
             
             #line default
             #line hidden
-            this.Write("\" />\n                            </Instance>\n                        </CallInfo>\n                    </Call>\n                </Parts>\n                <Wires>\n                    <Wire UId=\"23\">\n                        <Powerrail />\n                        <NameCon UId=\"21\" Name=\"en\" />\n                    </Wire>\n                </Wires>\n            </FlgNet>\n        </NetworkSource>\n        <ProgrammingLanguage>LAD</ProgrammingLanguage>\n    </AttributeList>\n    <ObjectList>\n        <MultilingualText ID=\"");
+            this.Write("\" />\r\n                            </Instance>\r\n                        </CallInfo>\r\n                    </Call>\r\n                </Parts>\r\n                <Wires>\r\n                    <Wire UId=\"23\">\r\n                        <Powerrail />\r\n                        <NameCon UId=\"21\" Name=\"en\" />\r\n                    </Wire>\r\n                </Wires>\r\n            </FlgNet>\r\n        </NetworkSource>\r\n        <ProgrammingLanguage>LAD</ProgrammingLanguage>\r\n    </AttributeList>\r\n    <ObjectList>\r\n        <MultilingualText ID=\"");
             
-            #line 26 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 26 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetId()));
             
             #line default
             #line hidden
-            this.Write("\" CompositionName=\"Comment\">\n            <ObjectList>\n                <MultilingualTextItem ID=\"");
+            this.Write("\" CompositionName=\"Comment\">\r\n            <ObjectList>\r\n                <MultilingualTextItem ID=\"");
             
-            #line 28 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 28 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetId()));
             
             #line default
             #line hidden
-            this.Write("\" CompositionName=\"Items\">\n                    <AttributeList>\n                        <Culture>de-DE</Culture>\n                        <Text />\n                    </AttributeList>\n                </MultilingualTextItem>\n            </ObjectList>\n        </MultilingualText>\n        <MultilingualText ID=\"");
+            this.Write("\" CompositionName=\"Items\">\r\n                    <AttributeList>\r\n                        <Culture>de-DE</Culture>\r\n                        <Text />\r\n                    </AttributeList>\r\n                </MultilingualTextItem>\r\n            </ObjectList>\r\n        </MultilingualText>\r\n        <MultilingualText ID=\"");
             
-            #line 36 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 36 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetId()));
             
             #line default
             #line hidden
-            this.Write("\" CompositionName=\"Title\">\n            <ObjectList>\n                <MultilingualTextItem ID=\"");
+            this.Write("\" CompositionName=\"Title\">\r\n            <ObjectList>\r\n                <MultilingualTextItem ID=\"");
             
-            #line 38 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 38 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetId()));
             
             #line default
             #line hidden
-            this.Write("\" CompositionName=\"Items\">\n                    <AttributeList>\n                        <Culture>de-DE</Culture>\n                        <Text>");
+            this.Write("\" CompositionName=\"Items\">\r\n                    <AttributeList>\r\n                        <Culture>de-DE</Culture>\r\n                        <Text>");
             
-            #line 41 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+            #line 41 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockName));
             
             #line default
             #line hidden
-            this.Write("</Text>\n                    </AttributeList>\n                </MultilingualTextItem>\n            </ObjectList>\n        </MultilingualText>\n    </ObjectList>\n</SW.Blocks.CompileUnit>\n\n");
+            this.Write("</Text>\r\n                    </AttributeList>\r\n                </MultilingualTextItem>\r\n            </ObjectList>\r\n        </MultilingualText>\r\n    </ObjectList>\r\n</SW.Blocks.CompileUnit>\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 49 "/Users/jan/RiderProjects/TiaGenerator/TiaGenerator/TiaGenerator/Templates/TemplateFbBlockCall.tt"
+        #line 49 "C:\Users\jbieh\RiderProjects\TiaGenerator\TiaGenerator\Templates\TemplateFbBlockCall.tt"
 
     public string BlockName { get; set; } = null!;
     public string BlockInstanceName { get; set; } = null!;

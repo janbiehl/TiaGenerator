@@ -1,6 +1,6 @@
 <#@ template language="C#" #>
 <#@ import namespace="System.Collections.Generic" #>
-^<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Linq" #>
 <?xml version="1.0" encoding="utf-8"?>
 <Document>
   <Engineering version="V17"/>
