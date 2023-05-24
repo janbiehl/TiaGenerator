@@ -76,7 +76,7 @@ namespace TiaGenerator.Services
 								throw new ArgumentOutOfRangeException(nameof(result.Result), "The result is unknown");
 						}
 					}
-					catch (ApplicationException e)
+					catch (Exception e)
 					{
 						_logger.LogCritical(e, "Could not execute action {Action}", action);
 						break; // Leave the loop as we had a fatal error
