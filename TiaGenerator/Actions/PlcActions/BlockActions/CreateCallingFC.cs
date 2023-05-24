@@ -146,6 +146,8 @@ namespace TiaGenerator.Actions
 			var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
 			FileManager.RegisterFile(tempBlockFilePath);
 
+			Directory.CreateDirectory(Path.GetDirectoryName(tempBlockFilePath));
+
 			File.WriteAllText(tempBlockFilePath, blockFc.TransformText());
 
 			var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
