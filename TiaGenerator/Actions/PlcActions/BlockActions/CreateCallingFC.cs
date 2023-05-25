@@ -99,7 +99,7 @@ namespace TiaGenerator.Actions
 				                throw new InvalidOperationException("There is no plc device in the data store.");
 
 				var targetBlockGroup =
-					PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup!.Split('/'));
+					PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TiaUtils.GetBlockGroups(TargetBlockGroup!));
 
 				if (targetBlockGroup is null)
 					return new ActionResult(ActionResultType.Failure,
@@ -159,7 +159,8 @@ namespace TiaGenerator.Actions
 				var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
 				await FileManager.CreateFileAndWriteAll(tempBlockFilePath, blockFc.TransformText());
 
-				var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
+				var blockGroup =
+					dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(TiaUtils.GetBlockGroups(BlockGroup!));
 				var importedBlocks = blockGroup.Blocks.ImportBlocksFromFile(tempBlockFilePath, ImportOptions.None,
 					SWImportOptions.IgnoreStructuralChanges | SWImportOptions.IgnoreUnitAttributes |
 					SWImportOptions.IgnoreMissingReferencedObjects);

@@ -8,6 +8,7 @@ using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
 using TiaGenerator.Tia.Extensions;
+using TiaGenerator.Utils;
 
 namespace TiaGenerator.Actions
 {
@@ -44,7 +45,7 @@ namespace TiaGenerator.Actions
 				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device in the data store.");
 
-				var blockGroup = plcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup.Split("/"));
+				var blockGroup = plcDevice.PlcSoftware.GetOrCreateGroup(TiaUtils.GetBlockGroups(BlockGroup!));
 
 				var blocks = blockGroup.Blocks.ImportBlocksFromFile(BlockFile!,
 					ImportOptions.None,

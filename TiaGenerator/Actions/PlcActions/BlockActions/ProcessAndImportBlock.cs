@@ -65,7 +65,7 @@ namespace TiaGenerator.Actions
 				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device in the data store.");
 
-				var blockGroup = plcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup.Split("/"));
+				var blockGroup = plcDevice.PlcSoftware.GetOrCreateGroup(TiaUtils.GetBlockGroups(BlockGroup!));
 
 				var blocks = blockGroup.Blocks.ImportBlocksFromFile(BlockDestinationFile!,
 					ImportOptions.None,
