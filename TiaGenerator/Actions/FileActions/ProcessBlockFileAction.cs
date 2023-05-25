@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Utils;
@@ -17,6 +18,12 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override async Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(ProcessBlockFileAction));
+
+			activity?.SetTag(nameof(BlockSourceFile), BlockSourceFile);
+			activity?.SetTag(nameof(BlockDestinationFile), BlockDestinationFile);
+			activity?.SetTag(nameof(Templates), Templates);
+
 			if (string.IsNullOrWhiteSpace(BlockSourceFile))
 				return new ActionResult(ActionResultType.Failure, "No block file specified.");
 
@@ -40,6 +47,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
+				activity.RecordException(e);
 				throw new ApplicationException("Error while importing and processing block.", e);
 			}
 		}

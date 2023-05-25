@@ -57,6 +57,7 @@ namespace TiaGenerator
 			{
 				// Open telemetry tracing
 				Sdk.CreateTracerProviderBuilder()
+					.AddSource(Tracing.InstrumentationName)
 					.AddSource(Tia.Tracing.InstrumentationName)
 					.AddOtlpExporter(options =>
 					{

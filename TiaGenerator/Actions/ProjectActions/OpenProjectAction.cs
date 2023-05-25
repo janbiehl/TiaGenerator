@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
@@ -24,6 +26,12 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(OpenProjectAction));
+
+			activity?.SetTag(nameof(ProjectFilePath), ProjectFilePath);
+			activity?.SetTag(nameof(Username), Username);
+			activity?.SetTag(nameof(Password), Regex.Replace(Password ?? string.Empty, ".*", "*"));
+
 			if (datastore is not DataStore dataStore)
 			{
 				throw new InvalidOperationException("Invalid datastore");
@@ -66,6 +74,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
+				activity.RecordException(e);
 				throw new ApplicationException("Could not open project", e);
 			}
 		}

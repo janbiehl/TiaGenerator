@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
 using TiaGenerator.Models;
@@ -15,6 +16,10 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(GetPlcAction));
+
+			activity?.SetTag(nameof(PlcName), PlcName);
+
 			if (datastore is not DataStore dataStore)
 			{
 				throw new InvalidOperationException("Invalid datastore");
@@ -40,6 +45,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
+				activity.RecordException(e);
 				throw new ApplicationException("Could not get PLC device", e);
 			}
 		}

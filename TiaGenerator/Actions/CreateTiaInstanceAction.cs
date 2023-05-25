@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using Siemens.Engineering;
 using TiaGenerator.Core.Interfaces;
 using TiaGenerator.Core.Models;
@@ -15,6 +16,10 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(ProcessBlockFileAction));
+
+			activity?.SetTag(nameof(WithInterface), WithInterface);
+
 			if (datastore is not DataStore dataStore)
 			{
 				throw new InvalidOperationException("Invalid datastore");
@@ -32,7 +37,8 @@ namespace TiaGenerator.Actions
 				existingPortal?.Dispose();
 				dataStore.TiaPortal = null;
 
-				TiaPortal tiaPortal = new(WithInterface ? TiaPortalMode.WithUserInterface : TiaPortalMode.WithoutUserInterface);
+				TiaPortal tiaPortal =
+					new(WithInterface ? TiaPortalMode.WithUserInterface : TiaPortalMode.WithoutUserInterface);
 
 				dataStore.TiaPortal = tiaPortal;
 
@@ -40,6 +46,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
+				activity.RecordException(e);
 				throw new ApplicationException("Could not create TIA Portal instance", e);
 			}
 		}

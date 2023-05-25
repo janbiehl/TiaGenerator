@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using Siemens.Engineering;
 using Siemens.Engineering.SW;
 using TiaGenerator.Core.Interfaces;
@@ -28,6 +29,13 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override async Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(ProcessAndImportBlock));
+
+			activity?.SetTag(nameof(BlockSourceFile), BlockSourceFile);
+			activity?.SetTag(nameof(BlockDestinationFile), BlockDestinationFile);
+			activity?.SetTag(nameof(BlockGroup), BlockGroup);
+			activity?.SetTag(nameof(Templates), Templates);
+
 			if (datastore is not DataStore dataStore)
 			{
 				throw new InvalidOperationException("Invalid datastore");
@@ -74,6 +82,7 @@ namespace TiaGenerator.Actions
 			}
 			catch (Exception e)
 			{
+				activity.RecordException(e);
 				throw new ApplicationException("Error while importing and processing block.", e);
 			}
 		}

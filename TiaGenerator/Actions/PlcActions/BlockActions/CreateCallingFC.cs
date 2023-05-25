@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using OpenTelemetry.Trace;
 using Siemens.Engineering;
 using Siemens.Engineering.SW;
 using TiaGenerator.Core.Interfaces;
@@ -59,6 +60,16 @@ namespace TiaGenerator.Actions
 		/// <inheritdoc />
 		public override Task<ActionResult> Execute(IDataStore datastore)
 		{
+			using var activity = Tracing.ActivitySource.StartActivity(nameof(CreateCallingFC));
+
+			activity?.SetTag(nameof(TargetBlockGroup), TargetBlockGroup);
+			activity?.SetTag(nameof(BlockGroup), BlockGroup);
+			activity?.SetTag(nameof(BlockName), BlockName);
+			activity?.SetTag(nameof(Author), Author);
+			activity?.SetTag(nameof(Family), Family);
+			activity?.SetTag(nameof(BlockNumber), BlockNumber);
+			activity?.SetTag(nameof(AutoNumber), AutoNumber);
+
 			if (string.IsNullOrWhiteSpace(TargetBlockGroup))
 				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No target block group specified."));
 
@@ -78,89 +89,98 @@ namespace TiaGenerator.Actions
 				return Task.FromResult(new ActionResult(ActionResultType.Failure,
 					"Invalid block number -> It may not be 0 or less"));
 
-			if (datastore is not DataStore dataStore)
+			try
 			{
-				throw new InvalidOperationException("Invalid datastore");
-			}
-
-			var plcDevice = dataStore.TiaPlcDevice ??
-			                throw new InvalidOperationException("There is no plc device in the data store.");
-
-			var targetBlockGroup = PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup!.Split('/'));
-
-			if (targetBlockGroup is null)
-				return Task.FromResult(new ActionResult(ActionResultType.Failure,
-					$"Block group '{TargetBlockGroup}' does not exist."));
-
-			var networks = new List<string>();
-
-			// Get the informations about the blocks inside the block group
-			foreach (var block in targetBlockGroup.Blocks)
-			{
-				var blockType = block.GetBlockType();
-
-				switch (blockType)
+				if (datastore is not DataStore dataStore)
 				{
-					case BlockType.Fb:
-					{
-						TemplateFbBlockCall fbBlockCall = new()
-						{
-							BlockName = block.Name,
-							BlockInstanceName = $"iDB_{block.Name}"
-						};
-
-						networks.Add(fbBlockCall.TransformText());
-						break;
-					}
-					case BlockType.Fc:
-					{
-						TemplateFcBlockCall dummy = new()
-						{
-							BlockName = block.Name
-						};
-
-						networks.Add(dummy.TransformText());
-						break;
-					}
-					case BlockType.Undefined:
-					case BlockType.Ob:
-					case BlockType.Db:
-					case BlockType.Idb:
-					case BlockType.Adb:
-						break;
-					default:
-						throw new ArgumentOutOfRangeException();
+					throw new InvalidOperationException("Invalid datastore");
 				}
+
+				var plcDevice = dataStore.TiaPlcDevice ??
+				                throw new InvalidOperationException("There is no plc device in the data store.");
+
+				var targetBlockGroup =
+					PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup!.Split('/'));
+
+				if (targetBlockGroup is null)
+					return Task.FromResult(new ActionResult(ActionResultType.Failure,
+						$"Block group '{TargetBlockGroup}' does not exist."));
+
+				var networks = new List<string>();
+
+				// Get the informations about the blocks inside the block group
+				foreach (var block in targetBlockGroup.Blocks)
+				{
+					var blockType = block.GetBlockType();
+
+					switch (blockType)
+					{
+						case BlockType.Fb:
+						{
+							TemplateFbBlockCall fbBlockCall = new()
+							{
+								BlockName = block.Name,
+								BlockInstanceName = $"iDB_{block.Name}"
+							};
+
+							networks.Add(fbBlockCall.TransformText());
+							break;
+						}
+						case BlockType.Fc:
+						{
+							TemplateFcBlockCall dummy = new()
+							{
+								BlockName = block.Name
+							};
+
+							networks.Add(dummy.TransformText());
+							break;
+						}
+						case BlockType.Undefined:
+						case BlockType.Ob:
+						case BlockType.Db:
+						case BlockType.Idb:
+						case BlockType.Adb:
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+				}
+
+				TemplateBlockFC blockFc = new()
+				{
+					BlockName = BlockName!,
+					Author = Author!,
+					Family = Family!,
+					AutoNumber = AutoNumber,
+					BlockNumber = BlockNumber,
+					Networks = networks
+				};
+
+				var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
+				FileManager.RegisterFile(tempBlockFilePath);
+
+				Directory.CreateDirectory(Path.GetDirectoryName(tempBlockFilePath));
+
+				File.WriteAllText(tempBlockFilePath, blockFc.TransformText());
+
+				var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
+				var importedBlocks = blockGroup.Blocks.ImportBlocksFromFile(tempBlockFilePath, ImportOptions.None,
+					SWImportOptions.IgnoreStructuralChanges | SWImportOptions.IgnoreUnitAttributes |
+					SWImportOptions.IgnoreMissingReferencedObjects);
+
+				if (importedBlocks.Count > 0)
+					return Task.FromResult(new ActionResult(ActionResultType.Success,
+						$"FC '{BlockName}' created in block group '{BlockGroup}', invoking the blocks from {TargetBlockGroup}"));
+
+				return Task.FromResult(new ActionResult(ActionResultType.Failure,
+					$"FC '{BlockName}' could not be created in block group '{BlockGroup}'"));
 			}
-
-			TemplateBlockFC blockFc = new()
+			catch (Exception e)
 			{
-				BlockName = BlockName!,
-				Author = Author!,
-				Family = Family!,
-				AutoNumber = AutoNumber,
-				BlockNumber = BlockNumber,
-				Networks = networks
-			};
-
-			var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
-			FileManager.RegisterFile(tempBlockFilePath);
-
-			Directory.CreateDirectory(Path.GetDirectoryName(tempBlockFilePath));
-
-			File.WriteAllText(tempBlockFilePath, blockFc.TransformText());
-
-			var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
-			var importedBlocks = blockGroup.Blocks.ImportBlocksFromFile(tempBlockFilePath, ImportOptions.None,
-				SWImportOptions.IgnoreStructuralChanges | SWImportOptions.IgnoreUnitAttributes |
-				SWImportOptions.IgnoreMissingReferencedObjects);
-
-			if (importedBlocks.Count > 0)
-				return Task.FromResult(new ActionResult(ActionResultType.Success,
-					$"FC '{BlockName}' created in block group '{BlockGroup}', invoking the blocks from {TargetBlockGroup}"));
-
-			return Task.FromResult(new ActionResult(ActionResultType.Failure,
-				$"FC '{BlockName}' could not be created in block group '{BlockGroup}'"));
+				activity.RecordException(e);
+				throw new ApplicationException("Error while processing block file action.", e);
+			}
 		}
 	}
 }
