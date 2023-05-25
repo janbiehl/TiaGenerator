@@ -7,6 +7,6 @@ namespace TiaGenerator
 		internal const string InstrumentationName = "TiaGenerator";
 		internal const string InstrumentationVersion = "0.0.1";
 
-		public static ActivitySource ActivitySource = new(InstrumentationName, InstrumentationVersion);
+		public static readonly ActivitySource ActivitySource = new(InstrumentationName, InstrumentationVersion);
 	}
 }
