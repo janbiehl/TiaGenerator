@@ -58,7 +58,7 @@ namespace TiaGenerator.Actions
 		public bool AutoNumber { get; set; }
 
 		/// <inheritdoc />
-		public override Task<ActionResult> Execute(IDataStore datastore)
+		public override async Task<ActionResult> Execute(IDataStore datastore)
 		{
 			using var activity = Tracing.ActivitySource.StartActivity(nameof(CreateCallingFC));
 
@@ -71,23 +71,22 @@ namespace TiaGenerator.Actions
 			activity?.SetTag(nameof(AutoNumber), AutoNumber);
 
 			if (string.IsNullOrWhiteSpace(TargetBlockGroup))
-				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No target block group specified."));
+				return new ActionResult(ActionResultType.Failure, "No target block group specified.");
 
 			if (string.IsNullOrWhiteSpace(BlockGroup))
-				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No block group specified."));
+				return new ActionResult(ActionResultType.Failure, "No block group specified.");
 
 			if (string.IsNullOrWhiteSpace(BlockName))
-				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No block name specified."));
+				return new ActionResult(ActionResultType.Failure, "No block name specified.");
 
 			if (string.IsNullOrWhiteSpace(Author))
-				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No author specified."));
+				return new ActionResult(ActionResultType.Failure, "No author specified.");
 
 			if (string.IsNullOrWhiteSpace(Family))
-				return Task.FromResult(new ActionResult(ActionResultType.Failure, "No family specified."));
+				return new ActionResult(ActionResultType.Failure, "No family specified.");
 
 			if (BlockNumber < 1)
-				return Task.FromResult(new ActionResult(ActionResultType.Failure,
-					"Invalid block number -> It may not be 0 or less"));
+				return new ActionResult(ActionResultType.Failure, "Invalid block number -> It may not be 0 or less");
 
 			try
 			{
@@ -103,12 +102,12 @@ namespace TiaGenerator.Actions
 					PlcSoftwareUtils.GetBlockGroup(plcDevice.PlcSoftware, TargetBlockGroup!.Split('/'));
 
 				if (targetBlockGroup is null)
-					return Task.FromResult(new ActionResult(ActionResultType.Failure,
-						$"Block group '{TargetBlockGroup}' does not exist."));
+					return new ActionResult(ActionResultType.Failure,
+						$"Block group '{TargetBlockGroup}' does not exist.");
 
 				var networks = new List<string>();
 
-				// Get the informations about the blocks inside the block group
+				// Get the information about the blocks inside the block group
 				foreach (var block in targetBlockGroup.Blocks)
 				{
 					var blockType = block.GetBlockType();
@@ -158,11 +157,7 @@ namespace TiaGenerator.Actions
 				};
 
 				var tempBlockFilePath = PathUtils.GetBlockFilePath(PathUtils.ApplicationTempDirectory, BlockName!);
-				FileManager.RegisterFile(tempBlockFilePath);
-
-				Directory.CreateDirectory(Path.GetDirectoryName(tempBlockFilePath));
-
-				File.WriteAllText(tempBlockFilePath, blockFc.TransformText());
+				await FileManager.CreateFileAndWriteAll(tempBlockFilePath, blockFc.TransformText());
 
 				var blockGroup = dataStore.TiaPlcDevice.PlcSoftware.GetOrCreateGroup(BlockGroup!.Split('/'));
 				var importedBlocks = blockGroup.Blocks.ImportBlocksFromFile(tempBlockFilePath, ImportOptions.None,
@@ -170,11 +165,11 @@ namespace TiaGenerator.Actions
 					SWImportOptions.IgnoreMissingReferencedObjects);
 
 				if (importedBlocks.Count > 0)
-					return Task.FromResult(new ActionResult(ActionResultType.Success,
-						$"FC '{BlockName}' created in block group '{BlockGroup}', invoking the blocks from {TargetBlockGroup}"));
+					return new ActionResult(ActionResultType.Success,
+						$"FC '{BlockName}' created in block group '{BlockGroup}', invoking the blocks from {TargetBlockGroup}");
 
-				return Task.FromResult(new ActionResult(ActionResultType.Failure,
-					$"FC '{BlockName}' could not be created in block group '{BlockGroup}'"));
+				return new ActionResult(ActionResultType.Failure,
+					$"FC '{BlockName}' could not be created in block group '{BlockGroup}'");
 			}
 			catch (Exception e)
 			{

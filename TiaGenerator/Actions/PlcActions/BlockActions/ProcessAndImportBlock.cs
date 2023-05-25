@@ -59,10 +59,8 @@ namespace TiaGenerator.Actions
 
 			try
 			{
-				File.Copy(BlockSourceFile!, BlockDestinationFile!, true);
+				await FileManager.CopyFile(BlockSourceFile!, BlockDestinationFile!, true);
 				await FileProcessorUtils.ReplaceInFile(BlockDestinationFile!, Templates!);
-
-				FileManager.RegisterFile(BlockDestinationFile!);
 
 				var plcDevice = dataStore.TiaPlcDevice ??
 				                throw new InvalidOperationException("There is no plc device in the data store.");

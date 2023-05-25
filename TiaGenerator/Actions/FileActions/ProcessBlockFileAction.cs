@@ -30,19 +30,14 @@ namespace TiaGenerator.Actions
 			if (string.IsNullOrWhiteSpace(BlockDestinationFile))
 				return new ActionResult(ActionResultType.Failure, "No block destination file specified.");
 
-			if (!File.Exists(BlockSourceFile))
-				return new ActionResult(ActionResultType.Failure,
-					$"Block file '{BlockSourceFile}' does not exist.");
-
 			if (Templates == null)
 				return new ActionResult(ActionResultType.Failure, "No templates specified.");
 
 			try
 			{
-				File.Copy(BlockSourceFile!, BlockDestinationFile!, true);
+				await FileManager.CopyFile(BlockSourceFile!, BlockDestinationFile!, true);
 				await FileProcessorUtils.ReplaceInFile(BlockDestinationFile!, Templates!);
 
-				FileManager.RegisterFile(BlockDestinationFile!);
 				return new ActionResult(ActionResultType.Success, $"Block file '{BlockDestinationFile}' processed.");
 			}
 			catch (Exception e)

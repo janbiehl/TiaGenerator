@@ -24,7 +24,7 @@ namespace TiaGenerator.Actions
 		}
 
 		/// <inheritdoc />
-		public override Task<ActionResult> Execute(IDataStore datastore)
+		public override async Task<ActionResult> Execute(IDataStore datastore)
 		{
 			using var activity = Tracing.ActivitySource.StartActivity(nameof(ExportBlockAction));
 
@@ -50,12 +50,7 @@ namespace TiaGenerator.Actions
 				var block = plcDevice.PlcSoftware.BlockGroup.Blocks.Find(BlockName) ??
 				            throw new InvalidOperationException($"There is no block with name '{BlockName}'");
 
-				var directory = Path.GetDirectoryName(FilePath);
-				if (!Directory.Exists(directory))
-				{
-					Directory.CreateDirectory(directory!);
-					FileManager.RegisterDirectory(directory!);
-				}
+				await FileManager.CreateDirectory(FilePath!);
 
 				if (File.Exists(FilePath))
 					File.Delete(FilePath!);
@@ -64,8 +59,7 @@ namespace TiaGenerator.Actions
 
 				FileManager.RegisterFile(FilePath!);
 
-				return Task.FromResult(new ActionResult(ActionResultType.Success,
-					$"Exported block '{BlockName}' to '{FilePath}'"));
+				return new ActionResult(ActionResultType.Success, $"Exported block '{BlockName}' to '{FilePath}'");
 			}
 			catch (Exception e)
 			{
