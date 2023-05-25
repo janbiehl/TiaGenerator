@@ -85,8 +85,8 @@ namespace TiaGenerator.Services
 			}
 
 			if (_options.Cleanup)
-				FileManager.Cleanup();
-			
+				await FileManager.Cleanup(stoppingToken);
+
 			_applicationLifetime.StopApplication();
 		}
 	}
