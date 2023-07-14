@@ -48,7 +48,7 @@ namespace TiaGenerator
 				.MinimumLevel.Debug()
 #endif
 
-				.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+				.WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
 				.WriteTo.Console()
 				.CreateLogger();
 
