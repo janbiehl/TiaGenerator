@@ -25,7 +25,7 @@ actions:
     type: compile-plc
   # Save the project
   - !SaveProjectAction
-      type: save-project
+    type: save-project
   # Export a block from that plc
   - !ExportBlockAction
     type: export-block
@@ -81,7 +81,7 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl5
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
-      xxxx: 0005  
+      xxxx: 0005
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -92,7 +92,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0006
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -103,7 +103,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0007
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -114,7 +114,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0008
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -125,7 +125,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0009
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -136,8 +136,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0010
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -148,8 +148,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0011
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -160,7 +160,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0012
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -171,8 +171,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0013
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -183,8 +183,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0014
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -195,8 +195,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0015
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -207,8 +207,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0016
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -219,8 +219,8 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0017
-      
-      
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -231,9 +231,9 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0018
-      
-      
-      
+
+
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -244,7 +244,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0019
-    
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlock.xml
@@ -255,7 +255,7 @@ actions:
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
       xxxx: 0020
-      
+  
   # Continue the series
   - !ProcessAndImportBlock
     type: import-and-process-block
@@ -266,7 +266,7 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl21
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
@@ -276,7 +276,7 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl22
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
-  
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
@@ -286,7 +286,7 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl23
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
-      
+
   - !ProcessAndImportBlock
     type: import-and-process-block
     block_source_file: C:\Users\jbieh\AppData\Local\Temp\Tia\Blocks\TestBlockTmp.xml
@@ -296,6 +296,7 @@ actions:
       (?<=<Name>)[^<]+(?=</Name>): JanBiehl24
       (?<=<HeaderAuthor>)[^<]+(?=</HeaderAuthor>): JBI
       (?<=<HeaderFamily>)[^<]+(?=</HeaderFamily>): Sample
+      
   - !CreateCallingFC
     type: create-calling-fc
     target_block_group: Test/Hello/World
