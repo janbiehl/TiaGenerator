@@ -109,7 +109,7 @@
         <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-        <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1675251470" />
+        <PackageReference Include="Siemens.Collaboration.Net.TiaPortal.Openness.Resolver" Version="1.0.1685432245" />
         <PackageReference Include="TiaGenerator.Core" Version="0.0.0-alpha-34" />
         <PackageReference Include="TiaGenerator.Tia" Version="0.0.0-alpha-28" />
         <PackageReference Include="YamlDotNet" Version="13.1.0" />
