@@ -18,7 +18,7 @@ namespace TiaGenerator.Services
 			_serializer = serializer;
 		}
 
-		public GeneratorConfiguration? LoadData()
+		public GeneratorConfiguration? LoadConfiguration()
 		{
 			try
 			{

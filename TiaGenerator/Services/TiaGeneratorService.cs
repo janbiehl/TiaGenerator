@@ -36,9 +36,13 @@ namespace TiaGenerator.Services
 			// 	return Task.CompletedTask;
 			// }
 
-			var data = _dataProvider.LoadData();
+			var configuration = _dataProvider.LoadConfiguration();
 
-			if (data is null)
+			if (configuration is null)
+			{
+				_logger.LogError("No Configuration loaded.");
+			}
+			else
 			{
 				_logger.LogError("No data loaded.");
 			}
